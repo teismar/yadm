@@ -1,0 +1,13 @@
+# Syntax Highliting
+zdharma-continuum/fast-syntax-highlighting kind:defer
+
+# Auto Completion & Suggestion
+zsh-users/zsh-completions
+zsh-users/zsh-autosuggestions
+
+# fzf
+Aloxaf/fzf-tab
+
+# ohmyzsh
+ohmyzsh/ohmyzsh path:plugins/git
+

@@ -1,0 +1,28 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+# Configure the command symbol
+[character]
+success_symbol = '[❯](bold green)'
+error_symbol = '[✗](bold red)'
+
+[package]
+format = "pkg [$symbol$version]($style)"
+version_format = "${major}.${minor}"
+symbol = "󰏗 "
+style = "bright-yellow"
+
+[directory]
+truncation_length = 3
+truncation_symbol = "…/"
+fish_style_pwd_dir_length = 2  # Keeps the first x letters of each directory
+
+[python]
+disabled = true
+
+[cmd_duration]
+min_time = 10_000  # Show command duration over 10,000 milliseconds (=10 sec)
+format = " took [$duration]($style)"
