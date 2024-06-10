@@ -8,6 +8,10 @@ export PATH
 
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
+# Source custom scripts
+for file in ~/.zsh_scripts/*.zsh; do
+  [ -r "$file" ] && source "$file"
+done
 # source antidote
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 
@@ -39,6 +43,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
 alias ls='ls --color'
+alias cat='bat'
 
 # Shell integrations
 # eval "$(fzf --zsh)" # newer fzf needed
