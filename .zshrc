@@ -55,3 +55,9 @@ alias cat='bat'
 
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(starship init zsh)"
+
+# Jump into tmux
+if [ -z "$TMUX" ]
+then
+    tmux attach -t TMUX || tmux new -s TMUX
+fi
