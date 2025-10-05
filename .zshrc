@@ -49,7 +49,7 @@ alias ls='ls --color'
 alias cat='bat'
 
 # Shell integrations
-# eval "$(fzf --zsh)" # newer fzf needed
+eval "$(fzf --zsh)" # newer fzf needed
 # Enable fuzzy auto-completion
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
