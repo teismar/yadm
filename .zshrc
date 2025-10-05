@@ -15,6 +15,7 @@ done
 # source antidote
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 
+# FPATH
 fpath+=~/.zfunc
 
 # Load completions
