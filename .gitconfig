@@ -4,8 +4,8 @@
 	process = git-lfs filter-process
 	required = true
 [user]
-	name = cti_tei
-	email = tim.eismar@telekom.de
+	name = teismar
+	email = eismartim@gmail.com
 [core]
 	editor = nano
 	autocrlf = input
