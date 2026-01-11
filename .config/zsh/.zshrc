@@ -9,14 +9,14 @@ export PATH
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
 # Source custom scripts
-for file in ~/.zsh_scripts/*.zsh; do
+for file in "$ZDOTDIR/scripts/"*.zsh; do
   [ -r "$file" ] && source "$file"
 done
 # source antidote
-source ${ZDOTDIR:-~}/.antidote/antidote.zsh
+source "$HOME/.antidote/antidote.zsh"
 
 # FPATH
-fpath+=~/.zfunc
+fpath+=("$ZDOTDIR/functions")
 
 # Load completions
 autoload -Uz compinit && compinit
