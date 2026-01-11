@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# Define colors for pretty output
+GREEN="\033[1;32m"
+BLUE="\033[1;34m"
+NO_COLOR="\033[0m"
+
+echo -e "${GREEN}Starting Yadm Bootstrap for Fedora...${NO_COLOR}"
+
+# 1. Elevate privileges upfront
+sudo -v
+
+# 2. Install System Dependencies
+# Added 'unzip' and 'curl' which are needed for the font installation
+echo -e "${GREEN}Installing system packages...${NO_COLOR}"
+sudo dnf install -y \
+    zsh \
+    git \
+    curl \
+    unzip \
+    util-linux-user \
+    starship \
+    zoxide \
+    fzf \
+    bat \
+    eza \
+    ripgrep
+
+# 3. Install Antidote (Zsh Plugin Manager)
+if [ ! -d "$HOME/.antidote" ]; then
+    echo -e "${GREEN}Cloning Antidote...${NO_COLOR}"
+    git clone --depth=1 https://github.com/mattmc3/antidote.git "$HOME/.antidote"
+else
+    echo "Antidote already installed."
+fi
+
+# 4. Install Nerd Font (JetBrains Mono)
+FONT_NAME="JetBrainsMono"
+FONT_DIR="$HOME/.local/share/fonts"
+
+if [ ! -d "$FONT_DIR/$FONT_NAME" ]; then
+    echo -e "${BLUE}Installing $FONT_NAME Nerd Font...${NO_COLOR}"
+    mkdir -p "$FONT_DIR/$FONT_NAME"
+    
+    # Download the latest zip from the official repo
+    curl -fLo "/tmp/$FONT_NAME.zip" \
+        "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/$FONT_NAME.zip"
+    
+    # Unzip into the user fonts directory
+    unzip -o -q "/tmp/$FONT_NAME.zip" -d "$FONT_DIR/$FONT_NAME"
+    
+    # Clean up and refresh font cache
+    rm "/tmp/$FONT_NAME.zip"
+    echo -e "${BLUE}Refreshing font cache...${NO_COLOR}"
+    fc-cache -fv
+else
+    echo "Nerd Font ($FONT_NAME) already installed."
+fi
+
+# 5. Create necessary folder structures
+# Updated for XDG Standard
+mkdir -p "$HOME/.local/bin"
+mkdir -p "$HOME/.config/zsh/scripts"
+mkdir -p "$HOME/.config/zsh/functions"
+mkdir -p "$HOME/.config/starship"
+
+# 6. Create the Anchor File (Crucial for Zsh XDG)
+if [ ! -f "$HOME/.zshenv" ]; then
+    echo -e "\033[1;34mCreating .zshenv anchor file...\033[0m"
+    echo 'export ZDOTDIR="$HOME/.config/zsh"' > "$HOME/.zshenv"
+fi
+
+# 7. Change default shell to Zsh
+if [ "$SHELL" != "/bin/zsh" ]; then
+    echo -e "${GREEN}Changing default shell to Zsh...${NO_COLOR}"
+    sudo chsh -s /bin/zsh "$USER"
+fi
+
+echo -e "${GREEN}Bootstrap Complete! Please restart your terminal.${NO_COLOR}"
+echo -e "${BLUE}NOTE: You must manually set 'JetBrainsMono Nerd Font' in your Terminal Settings (Preferences > Profile > Text).${NO_COLOR}"
